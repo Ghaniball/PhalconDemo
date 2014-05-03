@@ -1,0 +1,27 @@
+{
+    "name": "vendor/phalcon-demo",
+    "description": "Description of project PhalconDemo.",
+    "authors": [
+        {
+            "name": "Ghaniball",
+            "email": "igodorogea@winify.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.23",
+        "zendframework/zend-mail": "dev-master",
+        "zendframework/zend-crypt": "dev-master",
+        "zendframework/zend-math": "dev-master",
+        "zendframework/zend-loader": "dev-master",
+        "zendframework/zend-mime": "dev-master",
+        "zendframework/zend-stdlib": "dev-master"
+    },
+    "require-dev": {
+        "zendframework/zend-servicemanager": "dev-master",
+        "zendframework/zend-validator": "dev-master"
+    },
+    "suggest": {
+        "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
+        "zendframework/zend-validator": "Zend\\Validator component"
+    }
+}

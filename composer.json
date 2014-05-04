@@ -9,16 +9,19 @@
     ],
     "require": {
         "php": ">=5.3.23",
-        "zendframework/zend-mail": "dev-master",
-        "zendframework/zend-crypt": "dev-master",
-        "zendframework/zend-math": "dev-master",
-        "zendframework/zend-loader": "dev-master",
-        "zendframework/zend-mime": "dev-master",
-        "zendframework/zend-stdlib": "dev-master"
+        "zendframework/zend-mail": "2.3.*",
+        "zendframework/zend-http": "2.3.*",
+        "zendframework/zend-crypt": "2.3.*",
+        "zendframework/zend-math": "2.3.*",
+        "zendframework/zend-loader": "2.3.*",
+        "zendframework/zend-mime": "2.3.*",
+        "zendframework/zend-stdlib": "2.3.*",
+        "zendframework/zend-loader": "2.3.*",
+        "zendframework/zend-uri": "2.3.*"
     },
     "require-dev": {
-        "zendframework/zend-servicemanager": "dev-master",
-        "zendframework/zend-validator": "dev-master"
+        "zendframework/zend-servicemanager": "2.3.*",
+        "zendframework/zend-validator": "2.3.*"
     },
     "suggest": {
         "zendframework/zend-servicemanager": "Zend\\ServiceManager component",

@@ -1,63 +1,120 @@
 <?php
+
 use Zend\Http\Client;
-use Zend\Http\Request;
 
-class SearchController extends ControllerBase {
-    
-    public function indexAction(){
-        
-    }
+class SearchController extends ControllerBase
+{
+	public function indexAction() {
 
-    public function googleAction() {
-        $mes = "";
-        if($this->request->isPost()){
-            $keyword = $this->request->getPost("keyword");
-            $domain = $this->request->getPost("domain");
+	}
 
-            if(strlen($keyword)>0 && strlen($domain)>0){
-                $mes = $this->feedbackSearch($keyword,$domain);
-            }
-            else{
-                $mes = "No Data";
-            }
-        }
-        $this->view->setVar("message",$mes);
-    }
-    
-    
-    private function getResult($keyword){
-        $url = "http://ajax.googleapis.com/ajax/services/search/web?q=$keyword&rsz=large&v=1.0&start=0&hl=de&lr=lang_de";
-        $request = new Request();
-        $request->setUri($url);
-        $client = new Client();
-        return $client->send($request);
-    }
-    
-    private function openResult($keyword){
-        $r = $this->getResult($keyword);
-        $objectR = json_decode($r->getBody());
-        return $objectR->responseData->results;
-    }
-    
-    private function feedbackSearch($keyword, $domain){
-        $result = $this->openResult($keyword);
-                
-        if(sizeof($result) == 0){
-            return "A default answer if the API service fails for some 3rd party reasons or it takes longer than a specified limit You came to the right address! We see you have the potential of improving your position in the Google search for the important Keyword you specified!";
-        }
-        else{
-            $existen = false;
-            for($i=0; $i<sizeof($result); $i++){
-                $res = $result[$i];
-                if($domain == $res->visibleUrl){
-                    $existen = true;
-                }
-            }
-            if($existen){
-               return "Domain mentioned is Detected in the first 8 positions of the KW request based on local search (Google.de) and German Language We see that you already did a good job positioning yourself for the Keyword specified in the first 8 positions of the Google.de search and we will be glad to help you improve your position for other important Keywords or improve your actual positions locally and internationally!"; 
-            }else{
-               return "Domain mentioned is NOT detected in the first 8 positions of the KW request based on local search (Google.de) and German Language You came to the right address! Being out of first 8 positions in the Google search for the important Keyword you specified we can definitely help you here!"; 
-            }
-        }
-    }
+	public function makeAction() {
+		
+		$form = new SearchForm();
+		
+		if ($this->request->isPost()) {
+			
+			if ($form->isValid($this->request->getPost())) {
+				
+			}
+			/*
+			$keyword = $this->request->getPost("keyword");
+			$domain = $this->request->getPost("domain");
+
+			if (!empty($keyword) && !empty($domain)) {
+				$response = $this->makeRequest($keyword);
+				$results = $this->getResults($response);
+				
+				$mes = $this->getMessage($results, $keyword, $domain);
+				
+				$this->sendEmail($results, $keyword, $domain, $mes);
+				$this->log($results, $keyword, $domain, $mes);
+			} else {
+				$mes = "No Data";
+			}*/
+			
+		}
+		$this->view->form = $form;
+		//$this->view->setVar("message", $mes);
+	}
+	
+	/**
+	 * @param String $keyword
+	 * @return \Zend\Http\Response
+	 */
+	private function makeRequest($keyword) {
+		$uri = "http://ajax.googleapis.com/ajax/services/search/web";
+		
+		$client = new Client(
+						$uri,
+						array(
+							'maxredirects' => 10,
+							'timeout'      => 60
+						));
+		$client->setParameterGet(array(
+			'q'		=> $keyword,
+			'rsz'	=> 'large',
+			'v'		=> '1.0',
+			'start'	=> '0',
+			'hl'	=> 'de',
+			'lr'	=> 'lang_de',
+		));
+		
+		return $client->send();
+	}
+
+	/**
+	 * @param \Zend\Http\Response $response
+	 * @return Array
+	 */
+	private function getResults(\Zend\Http\Response $response) {
+		$json = $response->getBody();
+		$res = json_decode($json);
+		return $res->responseData->results;
+	}
+
+	/**
+	 * @param Array $results
+	 * @param String $keyword
+	 * @param String $domain
+	 * @return String
+	 */
+	private function getMessage($results, $keyword, $domain) {
+		$messages = $this->config->messages;
+		
+		if (empty($results)) {
+			return sprintf($messages->requestFails, $keyword);
+		} else {
+			foreach ($results as $key => $result) {
+				if ($domain == $result->visibleUrl) {
+					return sprintf($messages->foundInResults, $keyword);
+				}
+			}
+			
+			return sprintf($messages->notFoundInResults, $keyword);
+		}
+	}
+
+	/**
+	 * @param Array $results
+	 * @param String $keyword
+	 * @param String $domain
+	 * @param String $mes
+	 * @return String
+	 */
+	public function sendEmail($results, $keyword, $domain, $mes) {
+		// TODO
+	}
+
+	/**
+	 * @param Array $results
+	 * @param String $keyword
+	 * @param String $domain
+	 * @param String $mes
+	 * @return String
+	 */
+	public function log($results, $keyword, $domain, $mes) {
+		// TODO
+	}
+
 }

@@ -15,6 +15,6 @@ foreach ($_namespaces as $namespace => $path) {
  */
 $loader->registerDirs(array(
 	$config->application->controllersDir,
-	$config->application->libraryDir,
-	//	$config->application->modelsDir
+	//$config->application->libraryDir,
+	$config->application->formsDir,
 ))->registerNamespaces($namespaces)->register();

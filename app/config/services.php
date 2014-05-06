@@ -30,3 +30,18 @@ $di->set('view', function () use ($config) {
 
 	return $view;
 }, true);
+
+/**
+ * Start the session the first time some component request the session service
+ */
+$di->setShared('session', function() {
+    $session = new Phalcon\Session\Adapter\Files();
+    $session->start();
+    return $session;
+});
+$di->set('security', function(){
+    $security = new Phalcon\Security();
+    //Set the password hashing factor to 12 rounds
+    $security->setWorkFactor(12);
+    return $security;
+}, true);

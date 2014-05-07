@@ -10,8 +10,10 @@ use Zend\Mail\Message,
 
 class SearchController extends ControllerBase {
 
-	public function indexAction() {
 		
+
+	public function indexAction() {
+
 	}
 
 	public function makeAction() {
@@ -31,22 +33,23 @@ class SearchController extends ControllerBase {
 					$results = $this->getResults($response);
 					$mes = $this->getMessage($results, $keyword, $domain);
 
-					$this->sendEmail($results, $keyword, $domain);
+					//$this->sendEmail($results, $keyword, $domain);
 					//$this->log($results, $keyword, $domain);
+					echo $this->view->getRender('search', 'feedback', array(
+						'message' => $mes,
+					));
+					$this->view->disable();
 				} else {
 					$mes = "No Data";
 				}
 			}
 		}
-                
+
 		$this->view->form = $form;
 		//$this->view->setVar("message", $mes);
 	}
-	
-        public function feedbackAction(){
-            
-            
-        }
+
+		
 	/**
 	 * @param String $keyword
 	 * @return \Zend\Http\Response
@@ -91,15 +94,18 @@ class SearchController extends ControllerBase {
 		$messages = $this->config->messages;
 
 		if (empty($results)) {
-			return sprintf($messages->requestFails, $keyword);
+			return array('body' => sprintf($messages->requestFails->body, $keyword),
+					'head' => $messages->requestFails->head,);
 		} else {
 			foreach ($results as $key => $result) {
 				if ($domain == $result->visibleUrl) {
-					return sprintf($messages->foundInResults, $keyword);
+					return array('body' => sprintf($messages->foundInResults->body, $keyword),
+						'head'=> $messages->foundIdResults->head,);
 				}
 			}
 
-			return sprintf($messages->notFoundInResults, $keyword);
+			return array('head' => sprintf($messages->notFoundInResults->head, $keyword),
+					'body' => $messages->notFoundInResults->body);
 		}
 	}
 
@@ -111,7 +117,7 @@ class SearchController extends ControllerBase {
 	 */
 	private function sendEmail($results, $keyword, $domain) {
 		$mailCfg = $this->config->mail;
-		
+
 		$message = new Message();
 		$message->setFrom($mailCfg->from->mail, $mailCfg->from->name)
 				->addTo($mailCfg->to->mail, $mailCfg->to->name)
@@ -135,9 +141,9 @@ class SearchController extends ControllerBase {
 			'keyword' => $keyword,
 			'domain' => $domain
 		), function($view) {
-            $view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
-        }));
-		
+			$view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
+		}));
+
 		$html->type = "text/html";
 
 		$body = new MimeMessage();
@@ -157,18 +163,18 @@ class SearchController extends ControllerBase {
 	 */
 	private function log($results, $keyword, $domain) {
 		// 1GB of logs will cover ~ 350k requests
-		
+
 		$logger = new FileLogger($this->config->logPath . date('d-m-Y') . '.log');
-		
+
 		$selectedResults = "";
-		
+
 		foreach ($results as $result) {
 			$selectedResults .= 
 				"\n'url': " . $result->url .
 				"\n'title': " . $result->title.
 				"\n'content': " . $result->content;
 		}
-		
+
 		$logger->log('Keyword: [' . $keyword . ']');
 		$logger->log('Domain: [' . $domain . ']');
 		$logger->log('Results: ' . $selectedResults . 

@@ -38,10 +38,15 @@ class SearchController extends ControllerBase {
 				}
 			}
 		}
+                
 		$this->view->form = $form;
 		//$this->view->setVar("message", $mes);
 	}
-
+	
+        public function feedbackAction(){
+            
+            
+        }
 	/**
 	 * @param String $keyword
 	 * @return \Zend\Http\Response

@@ -1,21 +1,12 @@
+
 <form method="POST" action="">
 	<div>
-		<?php echo $form->label("keyword") ?><br/>
-		<?php echo $form->render("keyword") ?>
-		<?php echo $form->messages("keyword") ?>
-	</div>
-	
-	<div>
-		<?php echo $form->label("domain") ?><br/>
-		<?php echo $form->render("domain") ?>
-		<?php echo $form->messages("domain") ?>
+            <span>Website-Check</span><?php echo $form->render("keyword") ?><?php echo $form->render("domain") ?><?php echo $form->render("Check") ?>
+		<?php echo $form->messages("keyword") ?><?php echo $form->messages("domain") ?>
 	</div>
 	
 	<?php echo $form->render("csrf", array('value' => $this->security->getToken())) ?>
 	<?php echo $form->messages("csrf") ?>
 	
-	<div>
-		<?php echo $form->render("Check") ?>
-	</div>
 </form>
 

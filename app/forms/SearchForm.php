@@ -20,7 +20,7 @@ class SearchForm extends Form {
 	public function initialize($entity = null, $options = null) {
 		$keyword = new Text('keyword');
 
-		$keyword->setLabel('Keyword');
+		//$keyword->setLabel('Keyword');
 
 		$keyword->addValidators(array(
             new PresenceOf(array(
@@ -34,18 +34,20 @@ class SearchForm extends Form {
 
 		$this->add($keyword);
 		
-		$doamin = new Text('domain');
+		$doamin = new Text('domain', array(
+                    'placeholder' => "Domain",
+                ));
 
-		$doamin->setLabel('Domain');
+		//$doamin->setLabel('Domain');
 
 		$doamin->addValidators(array(
-            new PresenceOf(array(
-                'message' => 'The domain is required'
-            )),
-            new RegexValidator(array(
-				'pattern' => '',
-				'message' => 'The domain name is invalid'
-			)),
+                    new PresenceOf(array(
+                        'message' => 'The domain is required'
+                    )),
+                    new RegexValidator(array(
+                                        'pattern' => '/.*/',
+                                        'message' => 'The domain name is invalid'
+                                )),
 		));
 
 		$this->add($doamin);
@@ -63,7 +65,11 @@ class SearchForm extends Form {
 		$this->add($csrf);
 
 		// Sign Up
-		$this->add(new Submit('Check'));
+                $submit = new Submit('Check', array(
+                    "value" => "Analyse Starten",
+                ));
+                
+		$this->add($submit);
 	}
 
     /**

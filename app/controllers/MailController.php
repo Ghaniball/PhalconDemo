@@ -17,21 +17,21 @@ class MailController extends ControllerBase {
 	//	$settings = $this->config->mail;
 		$message = new Message();
 		$message->setBody('This is the text of the email.')
-				->setFrom('ghanibalx@gmail.com', 'Me')
-				->addTo('ghaniball@mail.ru', 'Ivan')
+				->setFrom('', 'Sender')
+				->addTo('', 'Report')
 				->setSubject('TestSubject');
 
 		// Setup SMTP transport using LOGIN authentication
 		$transport = new SmtpTransport();
 		$options = new SmtpOptions(array(
-			'host' => 'smtp.gmail.com',
+			'host' => 'smtp.mail.yahoo.com',
 			'connection_class' => 'login',
 			'connection_config' => array(
-				'ssl' => 'tls',
-				'username' => 'ghanibalx@gmail.com',
+				'ssl' => 'ssl',
+				'username' => '',
 				'password' => ''
 			),
-			'port' => 587,
+			'port' => 465,
 		));
 
 		$html = new MimePart('<b>heii, <i>sorry</i>, i\'m going late</b>');

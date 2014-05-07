@@ -21,12 +21,12 @@ return new \Phalcon\Config(array(
 	),
 	'mail' => array(
 		'fromName' => 'Phalcon Term',
-		'fromEmail' => 'ghanibalx@gmail.com',
+		'fromEmail' => '',
 		'smtp' => array(
 			'server' => 'smtp.gmail.com',
 			'port' => 465,
 			'security' => 'ssl',
-			'username' => 'ghanibalx@gmail.com',
+			'username' => '',
 			'password' => '',
 		)
 	),

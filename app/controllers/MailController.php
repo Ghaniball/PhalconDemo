@@ -17,8 +17,8 @@ class MailController extends ControllerBase {
 	//	$settings = $this->config->mail;
 		$message = new Message();
 		$message->setBody('This is the text of the email.')
-				->setFrom('', 'Sender')
-				->addTo('', 'Report')
+				->setFrom('seoziele.sender@yahoo.com', 'Me')
+				->addTo('seoziele.report@yahoo.com', 'Ivan')
 				->setSubject('TestSubject');
 
 		// Setup SMTP transport using LOGIN authentication
@@ -28,8 +28,8 @@ class MailController extends ControllerBase {
 			'connection_class' => 'login',
 			'connection_config' => array(
 				'ssl' => 'ssl',
-				'username' => '',
-				'password' => ''
+				'username' => 'seoziele.sender@yahoo.com',
+				'password' => 'Mihai2014'
 			),
 			'port' => 465,
 		));

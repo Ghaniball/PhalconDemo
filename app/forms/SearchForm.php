@@ -17,9 +17,9 @@ use Phalcon\Validation\Validator\Regex as RegexValidator;
 class SearchForm extends Form {
 
 	public function initialize($entity = null, $options = null) {
-		$keyword = new Text('keyword', array(
-			'placeholder' => "Keyword",
-		));
+		$keyword = new Text('keyword',array(
+                    'placeholder' => "suchbegriffe, keywords",
+                ));
 
 		//$keyword->setLabel('Keyword');
 
@@ -36,8 +36,8 @@ class SearchForm extends Form {
 		$this->add($keyword);
 
 		$doamin = new Text('domain', array(
-			'placeholder' => "Domain",
-		));
+                    'placeholder' => "www.ihre-webseite.com",
+                ));
 
 		//$doamin->setLabel('Domain');
 

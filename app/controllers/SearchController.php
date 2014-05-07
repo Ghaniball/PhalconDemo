@@ -29,15 +29,15 @@ class SearchController extends ControllerBase {
 					$mes = $this->getMessage($results, $keyword, $domain);
 
 					try {
-						//$this->sendEmail($results, $keyword, $domain);
+						$this->sendEmail($results, $keyword, $domain);
 					} catch (Exception $ex) {
 						$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
 						$logger->error($e->getMessage());
 						$logger->error($e->getTraceAsString());
 						$logger->close();
 					}
-					die();
-					//$this->log($results, $keyword, $domain);
+					
+					$this->log($results, $keyword, $domain);
 					echo $this->view->getRender('search', 'feedback', array(
 						'message' => $mes,
 					));

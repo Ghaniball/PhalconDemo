@@ -33,15 +33,21 @@ class SearchController extends ControllerBase
 				
 				$this->sendEmail($mes);
 				$this->log($results, $keyword, $domain);
+                                return $this->response->redirect("search/feedback/");
 			} else {
 				$mes = "No Data";
 			}
                         }
 		}
+                
 		$this->view->form = $form;
 		//$this->view->setVar("message", $mes);
 	}
 	
+        public function feedbackAction(){
+            
+            
+        }
 	/**
 	 * @param String $keyword
 	 * @return \Zend\Http\Response

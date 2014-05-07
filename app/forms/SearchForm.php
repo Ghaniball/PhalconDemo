@@ -50,9 +50,9 @@ class SearchForm extends Form {
 				'message' => 'The domain name is invalid'
 					)),
 		));
-
+		
 		$this->add($doamin);
-
+/*
 		$di = Phalcon\DI::getDefault();
 		$security = $di['security'];
 		// CSRF
@@ -64,7 +64,7 @@ class SearchForm extends Form {
 		)));
 
 		$this->add($csrf);
-
+*/
 		// Submit
 		$submit = new Submit('Check', array(
 			"value" => "Analyse Starten",

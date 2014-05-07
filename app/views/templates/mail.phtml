@@ -1,8 +1,21 @@
-<?php
-
-use Phalcon\Tag as Tag;
-?>
-
-<?php
-
-echo $message;
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Report</title>
+	</head>
+	<body>
+		<p>Keyword: <b><?php echo $keyword; ?></b></p>
+		<p>Domain: <b><?php echo $domain; ?></b></p>
+		
+		<p>Results: </p>
+		
+		<ul>
+		<?php foreach ($results as $key => $result): ?>
+			<li>
+				<?php echo $key+1; ?> => <?php echo $result->url; ?>
+			</li>
+		<?php endforeach; ?>
+		</ul>
+	</body>
+</html>

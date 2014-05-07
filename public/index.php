@@ -1,23 +1,28 @@
 <?php
 
 error_reporting(E_ALL);
-ini_set("display_errors", 1);
+//ini_set("display_errors", 1);
 try {
-
+	/**
+     * Define some useful constants
+     */
+    define('BASE_DIR', dirname(__DIR__));
+    define('APP_DIR', BASE_DIR . '/app');
+	
     /**
      * Read the configuration
      */
-    $config = include __DIR__ . "/../app/config/config.php";
+    $config = include APP_DIR . '/config/config.php';
 
     /**
      * Read auto-loader
      */
-    include __DIR__ . "/../app/config/loader.php";
+    include APP_DIR . '/config/loader.php';
 
     /**
      * Read services
      */
-    include __DIR__ . "/../app/config/services.php";
+    include APP_DIR . '/config/services.php';
 
     /**
      * Handle the request
@@ -26,6 +31,7 @@ try {
 
     echo $application->handle()->getContent();
 
-} catch (\Exception $e) {
-    echo $e->getMessage();
+} catch (Exception $e) {
+	echo $e->getMessage(), '<br>';
+	echo nl2br(htmlentities($e->getTraceAsString()));
 }

@@ -46,7 +46,7 @@ class SearchForm extends Form {
 				'message' => 'The domain is required'
 					)),
 			new RegexValidator(array(
-				'pattern' => '/.*/',
+				'pattern' => '/^(?:https?:\/\/)?(?:[a-z0-9-]+\.)*((?:[a-z0-9-]+\.)[a-z]+)(.*)/',
 				'message' => 'The domain name is invalid'
 					)),
 		));
@@ -83,5 +83,4 @@ class SearchForm extends Form {
 			}
 		}
 	}
-
 }

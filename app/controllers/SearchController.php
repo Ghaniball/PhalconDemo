@@ -10,8 +10,6 @@ use Zend\Mail\Message,
 
 class SearchController extends ControllerBase {
 
-		
-
 	public function indexAction() {
 
 	}
@@ -21,19 +19,24 @@ class SearchController extends ControllerBase {
 		$form = new SearchForm();
 
 		if ($this->request->isPost()) {
-
 			if ($form->isValid($this->request->getPost())) {
-
-
 				$keyword = $this->request->getPost("keyword");
-				$domain = $this->request->getPost("domain");
-
+				$domain = $this->getDomain($this->request->getPost("domain"));
+				
 				if (!empty($keyword) && !empty($domain)) {
 					$response = $this->makeRequest($keyword);
 					$results = $this->getResults($response);
 					$mes = $this->getMessage($results, $keyword, $domain);
 
-					//$this->sendEmail($results, $keyword, $domain);
+					try {
+						//$this->sendEmail($results, $keyword, $domain);
+					} catch (Exception $ex) {
+						$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
+						$logger->error($e->getMessage());
+						$logger->error($e->getTraceAsString());
+						$logger->close();
+					}
+					die();
 					//$this->log($results, $keyword, $domain);
 					echo $this->view->getRender('search', 'feedback', array(
 						'message' => $mes,
@@ -49,7 +52,21 @@ class SearchController extends ControllerBase {
 		//$this->view->setVar("message", $mes);
 	}
 
+	private function getDomain($domain) {
+		$domain = str_replace(array('http://', 'https://', 'www.'), "", $domain);
 		
+		$pos = strpos($domain, "/");
+		
+		if ($pos !== FALSE) {
+			return substr($domain, 0, $pos);
+		} else {
+			return $domain;
+		}
+		
+		
+	}
+
+
 	/**
 	 * @param String $keyword
 	 * @return \Zend\Http\Response
@@ -95,17 +112,17 @@ class SearchController extends ControllerBase {
 
 		if (empty($results)) {
 			return array('body' => sprintf($messages->requestFails->body, $keyword),
-					'head' => $messages->requestFails->head,);
+				'head' => $messages->requestFails->head,);
 		} else {
 			foreach ($results as $key => $result) {
-				if ($domain == $result->visibleUrl) {
+				if (strpos($result->visibleUrl, $domain) !== FALSE) {
 					return array('body' => sprintf($messages->foundInResults->body, $keyword),
-						'head'=> $messages->foundIdResults->head,);
+						'head' => $messages->foundIdResults->head,);
 				}
 			}
 
 			return array('head' => sprintf($messages->notFoundInResults->head, $keyword),
-					'body' => $messages->notFoundInResults->body);
+				'body' => $messages->notFoundInResults->body);
 		}
 	}
 
@@ -137,12 +154,12 @@ class SearchController extends ControllerBase {
 		));
 
 		$html = new MimePart($this->view->getRender('templates', 'mail', array(
-			'results' => $results,
-			'keyword' => $keyword,
-			'domain' => $domain
-		), function($view) {
-			$view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
-		}));
+					'results' => $results,
+					'keyword' => $keyword,
+					'domain' => $domain
+						), function($view) {
+					$view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
+				}));
 
 		$html->type = "text/html";
 
@@ -169,16 +186,17 @@ class SearchController extends ControllerBase {
 		$selectedResults = "";
 
 		foreach ($results as $result) {
-			$selectedResults .= 
-				"\n'url': " . $result->url .
-				"\n'title': " . $result->title.
-				"\n'content': " . $result->content;
+			$selectedResults .=
+					"\n'url': " . $result->url .
+					"\n'title': " . $result->title .
+					"\n'content': " . $result->content;
 		}
 
 		$logger->log('Keyword: [' . $keyword . ']');
 		$logger->log('Domain: [' . $domain . ']');
-		$logger->log('Results: ' . $selectedResults . 
-					"\n\n======================================================\n");
+		$logger->log('Results: ' . $selectedResults .
+				"\n\n======================================================\n");
 		$logger->close();
 	}
+
 }

@@ -20,7 +20,17 @@
 	<?php /*echo $form->render("csrf", array('value' => $this->security->getToken())) ?>
 	<?php echo $form->messages("csrf") */?>
 	
-	<div class="disable-overlay active">
+	<div id="disOver" class="disable-overlay">
 		<img src="<?php echo $this->config->baseUrl; ?>/img/ajax-loader.gif" alt="Ajax Loader" />
 	</div>
 </form>
+<script>
+	(function() {
+		var disOver = document.getElementById('disOver'),
+			seoSubmit = document.getElementById('seoSubmit');
+			
+		seoSubmit.onsubmit = function() {
+			disOver.className += 'active';
+		};
+	})();
+</script>

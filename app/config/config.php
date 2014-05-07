@@ -23,8 +23,18 @@ return new \Phalcon\Config(array(
 	),
 	'mail' => $mailConfig,
 	'messages' => array(
-		'requestFails' => 'You came to the right address! We see you have the potential of improving your position in the Google search for the "%s" keyword you specified!',
-		'foundInResults' => 'Domain mentioned is Detected in the first 8 positions of the "%s" request based on local search (Google.de) and German Language We see that you already did a good job positioning yourself for the Keyword specified in the first 8 positions of the Google.de search and we will be glad to help you improve your position for other important Keywords or improve your actual positions locally and internationally!',
-		'notFoundInResults' => 'Domain mentioned is NOT detected in the first 8 positions of the "%s" request based on local search (Google.de) and German Language You came to the right address! Being out of first 8 positions in the Google search for the important Keyword you specified we can definitely help you here!'
+		'requestFails' => array(
+			"head" => "",
+			'body' => ' Buchen Sie jetzt eins unserer Optimierungspakete und bringen Sie Ihre Website bei Google nach vorne'
+		),
+		'foundInResults' => array(
+			"head" => "",
+			"body" => 'Ihre Seite ist mit den angegebenen keywords: "%s" bei Google aktuell gut platziert- erhalten Sie diese Position und nutzen Sie dafür unseren Service
+		'
+		) ,
+		'notFoundInResults' => array(
+			"head" => 'Ihre Seite ist mit den angegebenen keywords: "%s" nicht bei Google unter den TOP8',
+			"body" => "Sie können jetzt sofort etwas unternehmen und unseren Service für Sich gewinnbringend einsetzen",
+		) 
 	)
 ));

@@ -3,7 +3,7 @@
 return array(
 		'from' => array(
 			'name' => '',
-			'mail' => 'seoziele.sender@yahoo.com'
+			'mail' => 'sender.seoziele@yahoo.com'
 		),
 		'to' => array(
 			'name' => 'Doe',
@@ -14,7 +14,7 @@ return array(
 			'host' => 'smtp.mail.yahoo.com',
 			'port' => 465,
 			'security' => 'ssl',
-			'username' => 'seoziele.sender@yahoo.com',
+			'username' => 'sender.seoziele@yahoo.com',
 			'password' => 'Mihai2014',
 		)
 	);

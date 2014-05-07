@@ -1,12 +1,26 @@
-
-<form method="POST" action="" id="seoSubmit">
-	<div>
-            <span>Website-Check:</span><?php echo $form->render("domain") ?><?php echo $form->render("keyword") ?><?php echo $form->render("Check") ?>
-		<?php echo $form->messages("keyword") ?><?php echo $form->messages("domain") ?>
+<form method="POST" action="" id="seoSubmit" class="service-form">
+	<div class="column label">
+		<span>Website-Check:</span>
+	</div>
+	<div class="column domain">
+		<?php echo $form->render("domain") ?>
+	</div>
+	<div class="column keyword">
+		<?php echo $form->render("keyword") ?>
+	</div>
+	<div class="column button">
+		<?php echo $form->render("Check") ?>
 	</div>
 	
-	<?php echo $form->render("csrf", array('value' => $this->security->getToken())) ?>
-	<?php echo $form->messages("csrf") ?>
+	<div class="messages">
+		<?php echo $form->messages("keyword") ?>
+		<?php echo $form->messages("domain") ?>
+	</div>
 	
+	<?php /*echo $form->render("csrf", array('value' => $this->security->getToken())) ?>
+	<?php echo $form->messages("csrf") */?>
+	
+	<div class="disable-overlay active">
+		<img src="<?php echo $this->config->baseUrl; ?>/img/ajax-loader.gif" alt="Ajax Loader" />
+	</div>
 </form>
-

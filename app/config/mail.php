@@ -2,7 +2,7 @@
 
 return array(
 		'from' => array(
-			'name' => 'John',
+			'name' => '',
 			'mail' => 'seoziele.sender@yahoo.com'
 		),
 		'to' => array(

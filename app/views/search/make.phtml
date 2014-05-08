@@ -21,7 +21,7 @@
 	<?php echo $form->messages("csrf") */?>
 	
 	<div id="disOver" class="disable-overlay">
-		<img src="<?php echo $this->config->baseUrl; ?>/img/ajax-loader.gif" alt="Ajax Loader" />
+		<?php echo $this->tag->image('img/ajax-loader.gif'); ?>
 	</div>
 </form>
 <script>

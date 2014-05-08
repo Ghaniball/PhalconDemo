@@ -7,7 +7,7 @@
 		<meta charset="utf-8" />
 		<?php
 		echo Tag::getTitle();
-		echo Tag::stylesheetLink($this->config->baseUrl . 'css/main.css');
+		echo Tag::stylesheetLink('css/main.css');
 		?>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
@@ -16,6 +16,6 @@
 			<?php echo $this->getContent(); ?>
 
 		</div>
-		<?php //echo Tag::javascriptInclude($this->config->baseUrl . 'js/jquery.min.js');  ?>
+		<?php //echo Tag::javascriptInclude('js/jquery.min.js');  ?>
 	</body>
 </html>

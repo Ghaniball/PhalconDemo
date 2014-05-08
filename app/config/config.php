@@ -10,8 +10,6 @@ return new \Phalcon\Config(array(
 	  'password'    => '',
 	  'dbname'      => 'test',
 	  ), */
-	//'baseUrl' => 'http://192.168.3.134/PhalconDemo/public/',
-	'baseUrl' => '',
 	'logPath' => __DIR__ . '/../../logs/',
 	'application' => array(
 		'controllersDir' => APP_DIR . '/controllers/',

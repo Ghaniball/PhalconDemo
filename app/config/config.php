@@ -11,6 +11,8 @@ return new \Phalcon\Config(array(
 	  'dbname'      => 'test',
 	  ), */
 	'logPath' => __DIR__ . '/../../logs/',
+	'phpExe' => 'php',
+	'domainName' => 'http://phalcon-demo.lc',
 	'application' => array(
 		'controllersDir' => APP_DIR . '/controllers/',
 		'modelsDir' => APP_DIR . '/models/',

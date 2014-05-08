@@ -13,40 +13,47 @@ class MailController extends ControllerBase {
 		echo 'mail/index';
 	}
 
-	public function sendAction() {
-	//	$settings = $this->config->mail;
-		$message = new Message();
-		$message->setBody('This is the text of the email.')
-				->setFrom('seoziele.sender@yahoo.com', 'Me')
-				->addTo('seoziele.report@yahoo.com', 'Ivan')
-				->setSubject('TestSubject');
+	public function sendAction()
+	{
+		$mailCfg = $this->config->mail;
+		
+		$text = $this->request->getQuery('html');
 
-		// Setup SMTP transport using LOGIN authentication
-		$transport = new SmtpTransport();
-		$options = new SmtpOptions(array(
-			'host' => 'smtp.mail.yahoo.com',
-			'connection_class' => 'login',
-			'connection_config' => array(
-				'ssl' => 'ssl',
-				'username' => 'seoziele.sender@yahoo.com',
-				'password' => 'Mihai2014'
-			),
-			'port' => 465,
-		));
-
-		$html = new MimePart('<b>heii, <i>sorry</i>, i\'m going late</b>');
+		$html = new MimePart($text);
 		$html->type = "text/html";
 
 		$body = new MimeMessage();
 		$body->addPart($html);
 
+		$message = new Message();
+		$message->setFrom($mailCfg->from->mail, $mailCfg->from->name)
+				->addTo($mailCfg->to->mail, $mailCfg->to->name)
+				->setSubject($mailCfg->subject);
+
+		// Setup SMTP transport using LOGIN authentication
+		$transport = new SmtpTransport();
+		$options = new SmtpOptions(array(
+			'host' => $mailCfg->smtp->host,
+			'connection_class' => 'login',
+			'connection_config' => array(
+				'ssl' => $mailCfg->smtp->security,
+				'username' => $mailCfg->smtp->username,
+				'password' => $mailCfg->smtp->password
+			),
+			'port' => $mailCfg->smtp->port,
+		));
+
 		$message->setBody($body);
 
 		$transport->setOptions($options);
-		$transport->send($message);
 		
-		$logger = new FileLogger($this->config->logPath . date('d-m-Y') . '.log');
-		$logger->log($message->getBodyText());
-		$logger->close();
+		try {
+			$transport->send($message);
+		} catch (Exception $ex) {
+			$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
+			$logger->error($e->getMessage());
+			$logger->error($e->getTraceAsString());
+			$logger->close();
+		}
 	}
 }

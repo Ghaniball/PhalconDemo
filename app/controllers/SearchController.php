@@ -45,10 +45,7 @@ class SearchController extends ControllerBase {
 		} else {
 			return $domain;
 		}
-		
-		
 	}
-
 
 	/**
 	 * @param String $keyword
@@ -81,6 +78,7 @@ class SearchController extends ControllerBase {
 	private function getResults(\Zend\Http\Response $response) {
 		$json = $response->getBody();
 		$res = json_decode($json);
+		
 		return $res->responseData->results;
 	}
 

@@ -11,45 +11,40 @@ use Zend\Mail\Message,
 class SearchController extends ControllerBase {
 
 	public function indexAction() {
-
+		echo 'search/index';
 	}
 
 	public function makeAction() {
 
 		$form = new SearchForm();
 
-		if ($this->request->isPost()) {
-			if ($form->isValid($this->request->getPost())) {
-				$keyword = $this->request->getPost("keyword");
-				$domain = $this->getDomain($this->request->getPost("domain"));
-				
-				if (!empty($keyword) && !empty($domain)) {
-					$response = $this->makeRequest($keyword);
-					$results = $this->getResults($response);
-					$mes = $this->getMessage($results, $keyword, $domain);
+		if ($this->request->isPost() &&
+			$form->isValid($this->request->getPost()))
+		{
+			$keyword = $this->request->getPost("keyword");
+			$domain = $this->getDomain($this->request->getPost("domain"));
 
-					try {
-						$this->sendEmail($results, $keyword, $domain);
-					} catch (Exception $ex) {
-						$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
-						$logger->error($e->getMessage());
-						$logger->error($e->getTraceAsString());
-						$logger->close();
-					}
-					
-					$this->log($results, $keyword, $domain);
-					echo $this->view->getRender('search', 'feedback', array(
-						'message' => $mes,
-					));
-					$this->view->disable();
-				} else {
-					$mes = "No Data";
-				}
+			$response = $this->makeRequest($keyword);
+			$results = $this->getResults($response);
+			$mes = $this->getMessage($results, $keyword, $domain);
+
+			try {
+				$this->sendEmail($results, $keyword, $domain);
+			} catch (Exception $ex) {
+				$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
+				$logger->error($e->getMessage());
+				$logger->error($e->getTraceAsString());
+				$logger->close();
 			}
+
+			$this->log($results, $keyword, $domain);
+			echo $this->view->getRender('search', 'feedback', array(
+				'message' => $mes,
+			));
+			$this->view->disable();
 		}
 
 		$this->view->form = $form;
-		//$this->view->setVar("message", $mes);
 	}
 
 	private function getDomain($domain) {
@@ -62,10 +57,7 @@ class SearchController extends ControllerBase {
 		} else {
 			return $domain;
 		}
-		
-		
 	}
-
 
 	/**
 	 * @param String $keyword
@@ -198,5 +190,4 @@ class SearchController extends ControllerBase {
 				"\n\n======================================================\n");
 		$logger->close();
 	}
-
 }

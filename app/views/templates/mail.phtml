@@ -10,12 +10,10 @@
 		
 		<p>Results: </p>
 		
-		<ul>
+		<ol>
 		<?php foreach ($results as $key => $result): ?>
-			<li>
-				<?php echo $key+1; ?> => <?php echo $result->url; ?>
-			</li>
+			<li><?php echo $result->url; ?></li>
 		<?php endforeach; ?>
-		</ul>
+		</ol>
 	</body>
 </html>

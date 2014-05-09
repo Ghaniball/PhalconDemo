@@ -17,7 +17,7 @@ use Phalcon\Validation\Validator\Regex as RegexValidator;
 class SearchForm extends Form {
 
 	public function initialize($entity = null, $options = null) {
-		$keyword = new Text('keyword',array(
+		$keyword = new Text('keyword', array(
                     'placeholder' => "suchbegriffe, keywords",
                 ));
 
@@ -27,10 +27,10 @@ class SearchForm extends Form {
 			new PresenceOf(array(
 				'message' => 'The keyword is required'
 					)),
-			new StringLength(array(
+		/*	new StringLength(array(
 				'min' => 3,
 				'messageMinimum' => 'Keyword is too short. Minimum 3 characters'
-					)),
+					)),*/
 		));
 
 		$this->add($keyword);
@@ -81,6 +81,23 @@ class SearchForm extends Form {
 			foreach ($this->getMessagesFor($name) as $message) {
 				$this->flash->error($message);
 			}
+		}
+	}
+
+	public function renderDecorated($name) {
+		$element = $this->get($name);
+
+		$messages = $this->getMessagesFor($name);
+
+		if (count($messages)) {
+			echo '<div class="error">';
+			echo $element;
+			foreach ($messages as $message) {
+				echo $this->flash->error($message);
+			}
+			echo '</div>';
+		} else {
+			echo $element;
 		}
 	}
 }

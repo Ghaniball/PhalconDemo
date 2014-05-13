@@ -109,7 +109,7 @@ class SearchController extends ControllerBase {
 			foreach ($results as $key => $result) {
 				if (strpos($result->visibleUrl, $domain) !== FALSE) {
 					return array('body' => sprintf($messages->foundInResults->body, $keyword),
-						'head' => $messages->foundIdResults->head,);
+						'head' => $messages->foundInResults->head,);
 				}
 			}
 

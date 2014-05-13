@@ -46,7 +46,7 @@ class SearchForm extends Form {
 				'message' => 'The domain is required'
 					)),
 			new RegexValidator(array(
-				'pattern' => '/^(?:https?:\/\/)?(?:[a-z0-9-]+\.)*((?:[a-z0-9-]+\.)[a-z]+)(.*)/',
+				'pattern' => '/^(?:https?:\/\/)?(?:[a-z0-9-]+\.)*((?:[a-z0-9-]+\.)[a-z]+)(.*)/i',
 				'message' => 'The domain name is invalid'
 					)),
 		));
@@ -92,9 +92,9 @@ class SearchForm extends Form {
 		if (count($messages)) {
 			echo '<div class="error">';
 			echo $element;
-			foreach ($messages as $message) {
+		/*	foreach ($messages as $message) {
 				echo $this->flash->error($message);
-			}
+			}*/
 			echo '</div>';
 		} else {
 			echo $element;

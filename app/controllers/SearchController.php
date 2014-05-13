@@ -29,7 +29,7 @@ class SearchController extends ControllerBase {
 			$mes = $this->getMessage($results, $keyword, $domain);
 
 			try {
-				$this->sendEmail($results, $keyword, $domain);
+				//$this->sendEmail($results, $keyword, $domain);
 			} catch (Exception $ex) {
 				$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
 				$logger->error($e->getMessage());

@@ -32,13 +32,14 @@
 }
 
 body{
-    background-color: #D9901F;
     font-family: 'Trebuchet MS', Helvetica, sans-serif;
 }
 
 .content{
-    width: 960px;
-    margin:0 auto;
+    width: 100%;
+	height: 76px;
+	background-color: #D9901F;
+	overflow: hidden;
 }
 
 span{
@@ -50,14 +51,20 @@ span{
     line-height: 38px;
 }
 
+.messages {
+	width: 950px;
+	height: 100%;
+	margin: 0 auto;
+}
+
 .service-form {
-	width: 960px;
-	height: 76px;
+	width: 950px;
+	height: 100%;
 	margin: 0 auto;
 	position: relative;
 
 	.column {
-		padding: 17px 0;
+		padding: 15px 0;
 		line-height: 40px;
 		margin-left: 20px;
 		float: left;
@@ -71,7 +78,7 @@ span{
 			font-weight: bold;
 			font-size: 24px;
 			text-shadow: 1px 1px 1px #aaa;
-			padding-right: 5px;
+			padding-right: 0;
 		}
 		
 		&.domain,
@@ -101,7 +108,7 @@ span{
 				input {
 					border-color: #a00 #b00 #b00 #a00;
 					box-shadow: 0 0 6px #a00 inset;
-					margin-bottom: 3px;
+					margin-bottom: 1px;
 
 				}
 				
@@ -118,7 +125,7 @@ span{
 			float: right;
 			background: url('../img/button-overlay.png') no-repeat 0;
 			margin: 0;
-			padding: 15px 0 14px 0;
+			padding: 13px 5px 14px;
 			
 			input {
 				cursor: pointer;
@@ -158,9 +165,11 @@ span{
 }
 
 .spanFeed{
-    line-height: 65px;
+    float: left;
+    line-height: 76px;
 }
-.feedback{
+.feedback {
+	margin-top: 5px;
     width: 770px;
     height: 65px;
     background-color: #FFFFFF;
@@ -185,17 +194,26 @@ span{
     text-align: center;
     float: left;
 	overflow: hidden;
+	height: 100%;
+	
+	table {
+		width: 100%; height: 100%;
+		border-spacing: 0;
+		
+		td {
+			width: 100%; height: 100%;
+			vertical-align: middle;
+			padding: 0;
+		}
+	}
+	
 }
-.container h1{
+.container h1 {
     color: #f82520;
     font-size: 14px;
     margin: 0;
-    margin-top: 8px;
-    padding: 0;
 }
 .container p{
-    color:#525252;
+    color: #525252;
     margin: 2px;
-    padding: 0;
-    
 }

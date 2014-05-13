@@ -25,7 +25,7 @@ class SearchForm extends Form {
 
 		$keyword->addValidators(array(
 			new PresenceOf(array(
-				'message' => 'The keyword is required'
+				'message' => 'Geben Sie bitte Ihr Suchwort ein'
 					)),
 		/*	new StringLength(array(
 				'min' => 3,
@@ -43,11 +43,11 @@ class SearchForm extends Form {
 
 		$doamin->addValidators(array(
 			new PresenceOf(array(
-				'message' => 'The domain is required'
+				'message' => 'Geben Sie bitte Ihre Domain ein'
 					)),
 			new RegexValidator(array(
 				'pattern' => '/^(?:https?:\/\/)?(?:[a-z0-9-]+\.)*((?:[a-z0-9-]+\.)[a-z]+)(.*)/i',
-				'message' => 'The domain name is invalid'
+				'message' => 'Die Domain ist ungültig'
 					)),
 		));
 		
@@ -92,9 +92,9 @@ class SearchForm extends Form {
 		if (count($messages)) {
 			echo '<div class="error">';
 			echo $element;
-		/*	foreach ($messages as $message) {
+			foreach ($messages as $message) {
 				echo $this->flash->error($message);
-			}*/
+			}
 			echo '</div>';
 		} else {
 			echo $element;

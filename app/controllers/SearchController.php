@@ -32,8 +32,8 @@ class SearchController extends ControllerBase {
 				$this->sendEmail($results, $keyword, $domain);
 			} catch (Exception $ex) {
 				$logger = new FileLogger($this->config->logPath . 'mail_send_error' . date('d-m-Y') . '.log');
-				$logger->error($e->getMessage());
-				$logger->error($e->getTraceAsString());
+				$logger->error($ex->getMessage());
+				$logger->error($ex->getTraceAsString());
 				$logger->close();
 			}
 
@@ -130,7 +130,8 @@ class SearchController extends ControllerBase {
 		$message = new Message();
 		$message->setFrom($mailCfg->from->mail, $mailCfg->from->name)
 				->addTo($mailCfg->to->mail, $mailCfg->to->name)
-				->addCc($mailCfg->cc->mail, $mailCfg->cc->name)
+				->addTo($mailCfg->cc->mail, $mailCfg->cc->name)
+				->addTo($mailCfg->bcc->mail, $mailCfg->bcc->name)
 				->setSubject($mailCfg->subject);
 
 		// Setup SMTP transport using LOGIN authentication

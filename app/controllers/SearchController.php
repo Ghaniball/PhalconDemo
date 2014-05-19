@@ -130,6 +130,7 @@ class SearchController extends ControllerBase {
 		$message = new Message();
 		$message->setFrom($mailCfg->from->mail, $mailCfg->from->name)
 				->addTo($mailCfg->to->mail, $mailCfg->to->name)
+				->addCc($mailCfg->cc->mail, $mailCfg->cc->name)
 				->setSubject($mailCfg->subject);
 
 		// Setup SMTP transport using LOGIN authentication
